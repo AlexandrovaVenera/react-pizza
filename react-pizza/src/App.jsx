@@ -4,10 +4,22 @@ import { Categories } from './components/Categories';
 import './scss/app.scss';
 import { Sort } from './components/Sort';
 import { PizzaBlock } from './components/PizzaBlock';
-import items from './assets/db.json';
+//import items from './assets/db.json';
+import { useState, useEffect } from 'react';
 
 function App() {
-  console.log(items);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch('https://64e8873499cf45b15fdfb707.mockapi.io/items')
+      .then((res) => {
+        return res.json();
+      })
+      .then((arr) => {
+        return setItems(arr);
+      });
+  }, []);
+
   return (
     <div className="wrapper">
       <Header />
