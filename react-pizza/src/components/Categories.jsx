@@ -1,5 +1,5 @@
 import { useState } from 'react';
-export function Categories() {
+export function Categories({ value, onClickCategoryValue }) {
   const categoryArray = [
     'Все',
     'Мясные',
@@ -9,12 +9,6 @@ export function Categories() {
     'Закрытые',
   ];
 
-  const [indexActive, setIndexActive] = useState(0);
-
-  const changeActive = (index) => {
-    return setIndexActive(index);
-  };
-
   return (
     <nav className="categories">
       <ul>
@@ -22,8 +16,8 @@ export function Categories() {
           return (
             <li
               key={index}
-              onClick={() => changeActive(index)}
-              className={indexActive === index ? 'active' : ''}
+              onClick={() => onClickCategoryValue(index)}
+              className={value === index ? 'active' : ''}
             >
               {el}
             </li>
