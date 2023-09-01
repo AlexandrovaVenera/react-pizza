@@ -1,4 +1,5 @@
 .root {
+  position: relative;
 }
 
 .input {
@@ -7,4 +8,17 @@
   padding: 12px 20px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.clearIcon {
+  width: 25px;
+  height: 25px;
+  opacity: 0.4;
+  position: absolute;
+  right: 5px;
+  top: 11px;
+  cursor: pointer;
+  &:focus {
+    opacity: 1;
+  }
 }
