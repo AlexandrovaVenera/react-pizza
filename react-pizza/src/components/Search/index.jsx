@@ -1,17 +1,39 @@
-import styles from './Search.module.scss';
+import { SearchContext } from "../../App";
+import styles from "./Search.module.scss";
+import debounce from "lodash.debounce";
+import { useContext, useRef, useState, useCallback } from "react";
 
-export function Search({ searchValue, setSearchValue }) {
+export function Search() {
+  const inputRef = useRef();
+  const [value, setValue] = useState("");
+  const onClickClear = () => {
+    setSearchValue("");
+    setValue("");
+    inputRef.current.focus();
+  };
+  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const updateSearch = useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 1000),
+    []
+  );
+  const onChangeInputValue = (e) => {
+    setValue(e.target.value);
+    updateSearch(e.target.value);
+  };
   return (
     <div className={styles.root}>
       <input
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInputValue}
         className={styles.input}
         placeholder="Поиск пиццы"
       />
       {searchValue && (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={onClickClear}
           className={styles.clearIcon}
           width="25px"
           height="25px"
@@ -19,11 +41,7 @@ export function Search({ searchValue, setSearchValue }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect
-            width="24"
-            height="24"
-            fill="white"
-          />
+          <rect width="24" height="24" fill="white" />
           <path
             d="M7 17L16.8995 7.10051"
             stroke="#000000"

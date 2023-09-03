@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../redux/Slice/filterSlice";
 
-export function Sort({ value, onClickSortType }) {
-  const listSort = [
-    { name: 'популярности (asc)', sortProperty: '-rating' },
-    { name: 'популярности (desc)', sortProperty: 'rating' },
-    { name: 'цене (asc)', sortProperty: '-price' },
-    { name: 'цене (desc)', sortProperty: 'price' },
-    { name: 'алфавиту (asc)', sortProperty: '-title' },
-    { name: 'алфавиту (desc)', sortProperty: 'title' },
-  ];
+export const listSort = [
+  { name: "популярности (asc)", sortProperty: "-rating" },
+  { name: "популярности (desc)", sortProperty: "rating" },
+  { name: "цене (asc)", sortProperty: "-price" },
+  { name: "цене (desc)", sortProperty: "price" },
+  { name: "алфавиту (asc)", sortProperty: "-title" },
+  { name: "алфавиту (desc)", sortProperty: "title" },
+];
+export function Sort() {
+  const value = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
+
   const [openPopup, setOpenPopup] = useState(false);
-  const selectActive = (i) => {
-    onClickSortType(i);
+  const selectActive = (obj) => {
+    dispatch(setSort(obj));
     setOpenPopup(false);
   };
   return (
@@ -41,7 +46,7 @@ export function Sort({ value, onClickSortType }) {
                   onClick={() => selectActive(obj)}
                   key={i}
                   className={
-                    value.sortProperty === obj.sortProperty ? 'active' : ''
+                    value.sortProperty === obj.sortProperty ? "active" : ""
                   }
                 >
                   {obj.name}

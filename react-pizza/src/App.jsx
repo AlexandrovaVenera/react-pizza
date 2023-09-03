@@ -1,37 +1,28 @@
-import './App.css';
-import { Header } from './components/Header';
-import { NotFound } from './pages/NotFound';
-import './scss/app.scss';
-import { Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
-import { Home } from './pages/Home';
-import { Card } from './pages/Card';
+import "./App.css";
+import { Header } from "./components/Header";
+import { NotFound } from "./pages/NotFound";
+import "./scss/app.scss";
+import { Route, Routes } from "react-router-dom";
+import { useState, createContext } from "react";
+import { Home } from "./pages/Home";
+import { Card } from "./pages/Card";
+export const SearchContext = createContext();
 
 function App() {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   return (
-    <div className="wrapper">
-      <Header
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
-      <div className="content">
-        <Routes>
-          <Route
-            index
-            element={<Home searchValue={searchValue} />}
-          />
-          <Route
-            path="card"
-            element={<Card />}
-          />
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-        </Routes>
+    <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+      <div className="wrapper">
+        <Header />
+        <div className="content">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="card" element={<Card />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </SearchContext.Provider>
   );
 }
 
