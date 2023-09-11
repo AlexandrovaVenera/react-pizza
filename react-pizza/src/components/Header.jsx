@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
-import { Search } from "./Search";
+import { Link } from 'react-router-dom';
+import { Search } from './Search';
+import { useSelector } from 'react-redux';
 
 export function Header() {
+  const { items, totalPrice } = useSelector((state) => state.card);
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
           <div className="header__logo">
-            <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
+            <img
+              width="38"
+              src="./img/pizza-logo.svg"
+              alt="Pizza logo"
+            />
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>
@@ -16,8 +22,11 @@ export function Header() {
         </Link>
         <Search />
         <div className="header__cart">
-          <Link to="/card" className="button button--cart">
-            <span>520 ₽</span>
+          <Link
+            to="/card"
+            className="button button--cart"
+          >
+            <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -48,7 +57,7 @@ export function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{items.length}</span>
           </Link>
         </div>
       </div>

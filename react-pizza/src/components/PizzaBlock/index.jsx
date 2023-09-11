@@ -1,6 +1,8 @@
-import { useState } from "react";
-
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addItems } from '../../redux/Slice/cardSlice';
 export function PizzaBlock({
+  id,
   title,
   price,
   imageUrl,
@@ -9,18 +11,35 @@ export function PizzaBlock({
   category,
   rating,
 }) {
-  const typePizza = ["тонкое", "традиционное"];
+  const typePizza = ['тонкое', 'традиционное'];
   const [countPizza, setCountPizza] = useState(0);
   const [indexActive, setIndexSize] = useState(0);
   const [indexType, setIndexType] = useState(0);
   const changeCount = () => {
     return setCountPizza(+countPizza + 1);
   };
+  const dispatch = useDispatch();
 
+  const onClickAddItem = () => {
+    const obj = {
+      id,
+      title,
+      price,
+      imageUrl,
+      types,
+      sizes,
+    };
+    dispatch(addItems(obj));
+    changeCount();
+  };
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt={title} />
+        <img
+          className="pizza-block__image"
+          src={imageUrl}
+          alt={title}
+        />
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -28,7 +47,7 @@ export function PizzaBlock({
               return (
                 <li
                   key={index}
-                  className={indexType === index ? "active" : ""}
+                  className={indexType === index ? 'active' : ''}
                   onClick={() => setIndexType(index)}
                 >
                   {typePizza[el]}
@@ -41,7 +60,7 @@ export function PizzaBlock({
               return (
                 <li
                   key={index}
-                  className={indexActive === index ? "active" : ""}
+                  className={indexActive === index ? 'active' : ''}
                   onClick={() => setIndexSize(index)}
                 >
                   {el} см.
@@ -54,7 +73,7 @@ export function PizzaBlock({
           <div className="pizza-block__price">от {price} ₽</div>
           <div
             className="button button--outline button--add"
-            onClick={changeCount}
+            onClick={onClickAddItem}
           >
             <svg
               width="12"
