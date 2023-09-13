@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItems } from '../../redux/Slice/cardSlice';
 export function PizzaBlock({
   id,
@@ -10,28 +10,32 @@ export function PizzaBlock({
   sizes,
   category,
   rating,
+  count,
 }) {
   const typePizza = ['тонкое', 'традиционное'];
-  const [countPizza, setCountPizza] = useState(0);
+
+  const addedItem = useSelector((state) =>
+    state.card.items.find((obj) => obj.id === id)
+  );
   const [indexActive, setIndexSize] = useState(0);
   const [indexType, setIndexType] = useState(0);
-  const changeCount = () => {
-    return setCountPizza(+countPizza + 1);
-  };
   const dispatch = useDispatch();
-
   const onClickAddItem = () => {
     const obj = {
       id,
       title,
       price,
       imageUrl,
-      types,
+      types: typePizza[indexType],
       sizes,
+      count,
     };
     dispatch(addItems(obj));
-    changeCount();
   };
+
+  console.log(addedItem);
+  const addedCard = addedItem ? addedItem.count : 0;
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -88,7 +92,7 @@ export function PizzaBlock({
               />
             </svg>
             <span>Добавить</span>
-            <i>{countPizza}</i>
+            {addedCard > 0 && <i>{addedCard}</i>}
           </div>
         </div>
       </div>

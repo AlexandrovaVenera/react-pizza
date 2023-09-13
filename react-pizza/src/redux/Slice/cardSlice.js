@@ -8,15 +8,8 @@ export const cardSlice = createSlice({
   name: 'card',
   initialState,
   reducers: {
-    // addItems: (state, action) => {
-    //   state.items.push(action.payload);
-    //   state.totalPrice = state.items.reduce(
-    //     (sum, current) => sum + current.price,
-    //     0
-    //   );
-    // },
     addItems: (state, action) => {
-      const findItem = state.items.find((obj) => obj.id == action.payload);
+      const findItem = state.items.find((obj) => obj.id == action.payload.id);
       if (findItem) {
         findItem.count++;
       } else {
@@ -24,11 +17,17 @@ export const cardSlice = createSlice({
       }
 
       state.totalPrice = state.items.reduce(
-        (sum, current) => sum + current.price,
+        (sum, current) => sum + current.price * current.count,
         0
       );
     },
     removeItem: (state, action) => {
+      const findItem = state.items.find((obj) => obj.id == action.payload);
+      if (findItem) {
+        findItem.count--;
+      }
+    },
+    removeItems: (state, action) => {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
     clearItem: (state, action) => {
@@ -37,6 +36,7 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { addItems, removeItem, clearItem } = cardSlice.actions;
+export const { addItems, removeItem, removeItems, clearItem } =
+  cardSlice.actions;
 
 export default cardSlice.reducer;
