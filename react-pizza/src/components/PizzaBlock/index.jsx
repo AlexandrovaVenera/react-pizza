@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItems } from '../../redux/Slice/cardSlice';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItems } from "../../redux/Slice/cardSlice";
 export function PizzaBlock({
   id,
   title,
@@ -12,7 +12,7 @@ export function PizzaBlock({
   rating,
   count,
 }) {
-  const typePizza = ['тонкое', 'традиционное'];
+  const typePizza = ["тонкое", "традиционное"];
 
   const addedItem = useSelector((state) =>
     state.card.items.find((obj) => obj.id === id)
@@ -27,23 +27,18 @@ export function PizzaBlock({
       price,
       imageUrl,
       types: typePizza[indexType],
-      sizes,
+      sizes: sizes[indexActive],
       count,
     };
     dispatch(addItems(obj));
   };
 
-  console.log(addedItem);
   const addedCard = addedItem ? addedItem.count : 0;
 
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt={title}
-        />
+        <img className="pizza-block__image" src={imageUrl} alt={title} />
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -51,7 +46,7 @@ export function PizzaBlock({
               return (
                 <li
                   key={index}
-                  className={indexType === index ? 'active' : ''}
+                  className={indexType === index ? "active" : ""}
                   onClick={() => setIndexType(index)}
                 >
                   {typePizza[el]}
@@ -64,7 +59,7 @@ export function PizzaBlock({
               return (
                 <li
                   key={index}
-                  className={indexActive === index ? 'active' : ''}
+                  className={indexActive === index ? "active" : ""}
                   onClick={() => setIndexSize(index)}
                 >
                   {el} см.

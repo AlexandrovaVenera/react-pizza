@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   items: [],
   totalPrice: 0,
 };
 
 export const cardSlice = createSlice({
-  name: 'card',
+  name: "card",
   initialState,
   reducers: {
     addItems: (state, action) => {
-      const findItem = state.items.find((obj) => obj.id == action.payload.id);
+      const findItem = state.items.find((obj) => obj.id === action.payload.id);
       if (findItem) {
         findItem.count++;
       } else {
@@ -22,16 +22,25 @@ export const cardSlice = createSlice({
       );
     },
     removeItem: (state, action) => {
-      const findItem = state.items.find((obj) => obj.id == action.payload);
+      const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem) {
         findItem.count--;
       }
+      state.totalPrice = state.items.reduce(
+        (sum, current) => sum + current.price * current.count,
+        0
+      );
     },
     removeItems: (state, action) => {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
+      state.totalPrice = state.items.reduce(
+        (sum, current) => sum + current.price * current.count,
+        0
+      );
     },
     clearItem: (state, action) => {
       state.items = [];
+      state.totalPrice = 0;
     },
   },
 });

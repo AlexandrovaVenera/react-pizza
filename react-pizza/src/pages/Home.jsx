@@ -6,6 +6,7 @@ import PizzaSceleton from "../components/PizzaBlock/PizzaSceleton";
 import Pagination from "../components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import { SearchContext } from "../App";
+import { fetchPizzas, setItems } from "../redux/Slice/pizzaSlice";
 import {
   setCategoryId,
   setCurrentPage,
@@ -16,8 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { items, status } = useSelector((state) => state.pizza);
   const currentPage = useSelector((state) => state.filter.currentPage);
   const { sort, categoryId } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
@@ -76,23 +76,14 @@ function Home() {
         })
     : pizzaItems;
   const search = searchValue ? searchValue : "";
-  useEffect(() => {
-    fetch(
-      `https://64e8873499cf45b15fdfb707.mockapi.io/items?page=${currentPage}&limit=4&${
-        categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${sort.sortProperty.replace(
-        "-",
-        ""
-      )}&order=${order}&search=${search}`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((arr) => {
-        setItems(arr);
-        setIsLoading(false);
-      });
+
+  const getPizzas = () => {
+    dispatch(fetchPizzas({ categoryId, sort, search, order, currentPage }));
     window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    getPizzas();
   }, [categoryId, sort, searchValue, currentPage]);
   return (
     <>
@@ -106,7 +97,7 @@ function Home() {
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">
-          {isLoading ? sceletons : pizzaItems}
+          {status == "loading" ? sceletons : pizzaItems}
         </div>
         <Pagination
           currentPage={currentPage}

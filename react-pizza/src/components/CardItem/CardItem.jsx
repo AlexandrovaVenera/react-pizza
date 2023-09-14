@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { addItems, removeItem } from '../../redux/Slice/cardSlice';
+import { useDispatch } from "react-redux";
+import { addItems, removeItem, removeItems } from "../../redux/Slice/cardSlice";
 
 export function CardItem({
   id,
@@ -17,20 +17,27 @@ export function CardItem({
     dispatch(addItems({ id }));
   };
   const remove = () => {
-    dispatch(removeItem(id));
+    if (count > 1) {
+      dispatch(removeItem(id));
+    } else {
+      dispatch(removeItems(id));
+    }
   };
+
+  const removeCards = () => {
+    dispatch(removeItems(id));
+  };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{types} тесто, 26 см.</p>
+        <p>
+          {types} тесто, {sizes} см.
+        </p>
       </div>
       <div className="cart__item-count">
         <div
@@ -81,7 +88,10 @@ export function CardItem({
         <b>{price * count} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <div
+          onClick={removeCards}
+          className="button button--outline button--circle"
+        >
           <svg
             width="10"
             height="10"
