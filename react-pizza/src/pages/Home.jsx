@@ -1,11 +1,10 @@
 import { Categories } from "../components/Categories";
 import { Sort, listSort } from "../components/Sort";
 import { PizzaBlock } from "../components/PizzaBlock";
-import { useState, useEffect, useContext, useRef } from "react";
+import { useEffect, useRef } from "react";
 import PizzaSceleton from "../components/PizzaBlock/PizzaSceleton";
 import Pagination from "../components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
-import { SearchContext } from "../App";
 import { fetchPizzas, setItems } from "../redux/Slice/pizzaSlice";
 import {
   setCategoryId,
@@ -16,10 +15,11 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const { searchValue } = useContext(SearchContext);
   const { items, status } = useSelector((state) => state.pizza);
   const currentPage = useSelector((state) => state.filter.currentPage);
-  const { sort, categoryId } = useSelector((state) => state.filter);
+  const { sort, categoryId, searchValue } = useSelector(
+    (state) => state.filter
+  );
   const dispatch = useDispatch();
   const onChangeCurrentPage = (id) => {
     dispatch(setCurrentPage(id));
@@ -66,15 +66,7 @@ function Home() {
   const pizzaItems = items.map((el, index) => {
     return <PizzaBlock key={el.id} {...el} />;
   });
-  const pizzaSearchItems = searchValue
-    ? items
-        .filter((obj) =>
-          obj.title.toLowerCase().includes(searchValue.toLowerCase())
-        )
-        .map((el) => {
-          return <PizzaBlock key={el.id} {...el} />;
-        })
-    : pizzaItems;
+
   const search = searchValue ? searchValue : "";
 
   const getPizzas = () => {

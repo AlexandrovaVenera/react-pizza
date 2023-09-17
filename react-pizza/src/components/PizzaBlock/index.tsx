@@ -1,7 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems } from "../../redux/Slice/cardSlice";
-export function PizzaBlock({
+
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+  category: number;
+  rating: number;
+  count: number;
+};
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
   id,
   title,
   price,
@@ -11,7 +23,7 @@ export function PizzaBlock({
   category,
   rating,
   count,
-}) {
+}) => {
   const typePizza = ["тонкое", "традиционное"];
 
   const addedItem = useSelector((state) =>
@@ -93,4 +105,4 @@ export function PizzaBlock({
       </div>
     </div>
   );
-}
+};

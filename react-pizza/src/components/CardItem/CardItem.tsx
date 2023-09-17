@@ -1,17 +1,25 @@
 import { useDispatch } from "react-redux";
 import { addItems, removeItem, removeItems } from "../../redux/Slice/cardSlice";
 
-export function CardItem({
+type CardItemProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+  count: number;
+};
+
+export const CardItem: React.FC<CardItemProps> = ({
   id,
   title,
   price,
   imageUrl,
   types,
   sizes,
-  category,
-  rating,
   count,
-}) {
+}) => {
   const dispatch = useDispatch();
   const addItem = () => {
     dispatch(addItems({ id }));
@@ -112,4 +120,4 @@ export function CardItem({
       </div>
     </div>
   );
-}
+};

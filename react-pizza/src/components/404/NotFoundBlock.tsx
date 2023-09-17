@@ -1,5 +1,7 @@
 import styles from "./NotFoundBlock.module.scss";
-function NotFoundBlock() {
+import React from "react";
+
+const NotFoundBlock: React.FC = () => {
   return (
     <div className={styles.root}>
       <span>😕</span>
@@ -8,6 +10,6 @@ function NotFoundBlock() {
       <p>К сожалению данная страница отсутствует в нашем интернет-магазине</p>
     </div>
   );
-}
+};
 
 export default NotFoundBlock;

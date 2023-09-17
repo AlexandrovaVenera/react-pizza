@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-export function CardEmpty() {
+export const CardEmpty: React.FC = () => {
   return (
     <div className="container container--cart">
       <div className="cart cart--empty">
         <h2>
-          Корзина пустая <icon>😕</icon>
+          Корзина пустая <span>😕</span>
         </h2>
         <p>
           Вероятней всего, вы не заказывали ещё пиццу.
@@ -19,4 +19,4 @@ export function CardEmpty() {
       </div>
     </div>
   );
-}
+};
