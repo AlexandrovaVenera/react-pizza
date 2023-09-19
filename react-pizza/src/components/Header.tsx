@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-import { Search } from "./Search";
-import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import { Search } from './Search';
+import { useSelector } from 'react-redux';
+import { IItem, RootState } from '../@types/type';
 
 export const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.card);
+  const { items, totalPrice } = useSelector((state: RootState) => state.card);
   const totalCount = items.reduce(
-    (sum: number, current: any) => current.count + sum,
+    (sum: number, current: IItem) => current.count + sum,
     0
   );
   return (
@@ -13,7 +14,11 @@ export const Header = () => {
       <div className="container">
         <Link to="/">
           <div className="header__logo">
-            <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
+            <img
+              width="38"
+              src="./img/pizza-logo.svg"
+              alt="Pizza logo"
+            />
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>
@@ -22,7 +27,10 @@ export const Header = () => {
         </Link>
         <Search />
         <div className="header__cart">
-          <Link to="/card" className="button button--cart">
+          <Link
+            to="/card"
+            className="button button--cart"
+          >
             <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg

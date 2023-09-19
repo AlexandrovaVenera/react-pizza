@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 type CategoriesProps = {
   value: number;
-  onClickCategoryValue: any;
+  onClickCategoryValue: (index: number) => void;
 };
 export const Categories: React.FC<CategoriesProps> = ({
   value,
   onClickCategoryValue,
 }) => {
-  const categoryArray = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
+  const categoryArray: string[] = [
+    'Все',
+    'Мясные',
+    'Вегетарианская',
+    'Гриль',
+    'Острые',
+    'Закрытые',
   ];
 
   return (
@@ -25,7 +25,7 @@ export const Categories: React.FC<CategoriesProps> = ({
             <li
               key={index}
               onClick={() => onClickCategoryValue(index)}
-              className={value === index ? "active" : ""}
+              className={value === index ? 'active' : ''}
             >
               {el}
             </li>

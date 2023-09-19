@@ -1,20 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./Search.module.scss";
-import debounce from "lodash.debounce";
-import { useRef, useState, useCallback } from "react";
-import { setSearch } from "../../redux/Slice/filterSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './Search.module.scss';
+import debounce from 'lodash.debounce';
+import React, { useRef, useState, useCallback } from 'react';
+import { setSearch } from '../../redux/Slice/filterSlice';
+import { RootState } from '../../@types/type';
 
 export const Search: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  const searchValue = useSelector((state) => state.filter.searchValue);
+  const searchValue = useSelector(
+    (state: RootState) => state.filter.searchValue
+  );
   const setSearchValue = (str: string) => {
     dispatch(setSearch(str));
   };
   const onClickClear = () => {
-    setSearchValue("");
-    setValue("");
+    setSearchValue('');
+    setValue('');
     inputRef.current?.focus();
   };
 
@@ -24,9 +27,9 @@ export const Search: React.FC = () => {
     }, 1000),
     []
   );
-  const onChangeInputValue = (e: Event) => {
-    setValue((e.target as HTMLInputElement).value);
-    updateSearch((e.target as HTMLInputElement).value);
+  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    updateSearch(e.target.value);
   };
   return (
     <div className={styles.root}>
@@ -47,7 +50,11 @@ export const Search: React.FC = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="24" height="24" fill="white" />
+          <rect
+            width="24"
+            height="24"
+            fill="white"
+          />
           <path
             d="M7 17L16.8995 7.10051"
             stroke="#000000"

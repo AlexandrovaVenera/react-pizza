@@ -1,30 +1,30 @@
-import { Categories } from "../components/Categories";
-import { Sort, listSort } from "../components/Sort";
-import { PizzaBlock } from "../components/PizzaBlock";
-import { useEffect, useRef } from "react";
-import PizzaSceleton from "../components/PizzaBlock/PizzaSceleton";
-import Pagination from "../components/Pagination";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchPizzas, setItems } from "../redux/Slice/pizzaSlice";
+import { Categories } from '../components/Categories';
+import { Sort, listSort } from '../components/Sort';
+import { PizzaBlock } from '../components/PizzaBlock';
+import React, { useEffect, useRef } from 'react';
+import PizzaSceleton from '../components/PizzaBlock/PizzaSceleton';
+import Pagination from '../components/Pagination';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPizzas, setItems } from '../redux/Slice/pizzaSlice';
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/Slice/filterSlice";
-import qs from "qs";
-import { useNavigate } from "react-router-dom";
+} from '../redux/Slice/filterSlice';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
-function Home() {
+const Home: React.FC = () => {
   const { items, status } = useSelector((state) => state.pizza);
   const currentPage = useSelector((state) => state.filter.currentPage);
   const { sort, categoryId, searchValue } = useSelector(
     (state) => state.filter
   );
   const dispatch = useDispatch();
-  const onChangeCurrentPage = (id) => {
+  const onChangeCurrentPage = (id: number) => {
     dispatch(setCurrentPage(id));
   };
-  const order = sort.sortProperty.includes("-") ? "asc" : "desc";
+  const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
   const onChangeCategoryId = (id) => {
     dispatch(setCategoryId(id));
   };
@@ -63,14 +63,19 @@ function Home() {
     return <PizzaSceleton key={i} />;
   });
 
-  const pizzaItems = items.map((el, index) => {
-    return <PizzaBlock key={el.id} {...el} />;
+  const pizzaItems = items.map((el, index: number) => {
+    return (
+      <PizzaBlock
+        key={el.id}
+        {...el}
+      />
+    );
   });
 
-  const search = searchValue ? searchValue : "";
+  const search = searchValue ? searchValue : '';
 
   const getPizzas = () => {
-    dispatch(fetchPizzas({ categoryId, sort, search, order, currentPage }));
+    dispatch(fetchPizzas({ categoryId, sort:, search, order, currentPage }));
     window.scrollTo(0, 0);
   };
 
@@ -89,7 +94,7 @@ function Home() {
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">
-          {status == "loading" ? sceletons : pizzaItems}
+          {status == 'loading' ? sceletons : pizzaItems}
         </div>
         <Pagination
           currentPage={currentPage}
@@ -98,6 +103,6 @@ function Home() {
       </div>
     </>
   );
-}
+};
 
 export { Home };

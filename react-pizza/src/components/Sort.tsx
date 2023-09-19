@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/Slice/filterSlice';
+import { RootState } from '../@types/type';
 
 export const listSort = [
   { name: 'популярности (asc)', sortProperty: '-rating' },
@@ -10,9 +11,9 @@ export const listSort = [
   { name: 'алфавиту (asc)', sortProperty: '-title' },
   { name: 'алфавиту (desc)', sortProperty: 'title' },
 ];
-export function Sort() {
-  const value = useSelector((state) => state.filter.sort);
-  const sortRef = useRef();
+export const Sort: React.FC = () => {
+  const value = useSelector((state: RootState) => state.filter.sort);
+  const sortRef = useRef<HTMLDivElement>();
   const dispatch = useDispatch();
 
   const [openPopup, setOpenPopup] = useState(false);
@@ -22,8 +23,8 @@ export function Sort() {
   };
 
   useEffect(() => {
-    const onClickSort = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const onClickSort = (event: Event) => {
+      if (sortRef && !event.composedPath().includes(sortRef.current)) {
         setOpenPopup(false);
       }
     };
@@ -74,4 +75,4 @@ export function Sort() {
       )}
     </div>
   );
-}
+};

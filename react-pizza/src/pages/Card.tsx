@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { CardItem } from "../components/CardItem/CardItem";
-import { CardEmpty } from "../components/CardItem/CardEmpty";
-import { clearItem } from "../redux/Slice/cardSlice";
-export function Card() {
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CardItem } from '../components/CardItem/CardItem';
+import { CardEmpty } from '../components/CardItem/CardEmpty';
+import { clearItem } from '../redux/Slice/cardSlice.ts';
+import { IItem, RootState } from '../@types/type';
+export const Card: React.FC = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.card.items);
-  const totalPrice = useSelector((state) => state.card.totalPrice);
-  const totalCount = items.reduce((sum, current) => current.count + sum, 0);
+  const items = useSelector((state: RootState) => state.card.items);
+  const totalPrice = useSelector((state: RootState) => state.card.totalPrice);
+  const totalCount = items.reduce(
+    (sum: number, current: IItem) => current.count + sum,
+    0
+  );
   const clear = () => {
     dispatch(clearItem());
   };
@@ -51,7 +55,10 @@ export function Card() {
               </svg>
               Корзина
             </h2>
-            <div onClick={clear} className="cart__clear">
+            <div
+              onClick={clear}
+              className="cart__clear"
+            >
               <svg
                 width="20"
                 height="20"
@@ -94,18 +101,23 @@ export function Card() {
           </div>
           <div className="content-card__items">
             {items.map((item) => {
-              return <CardItem key={item.id} {...item} />;
+              return (
+                <CardItem
+                  key={item.id}
+                  {...item}
+                />
+              );
             })}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
               <span>
-                {" "}
-                Всего пицц: <b>{totalCount} шт.</b>{" "}
+                {' '}
+                Всего пицц: <b>{totalCount} шт.</b>{' '}
               </span>
               <span>
-                {" "}
-                Сумма заказа: <b>{totalPrice} ₽</b>{" "}
+                {' '}
+                Сумма заказа: <b>{totalPrice} ₽</b>{' '}
               </span>
             </div>
             <div className="cart__bottom-buttons">
@@ -140,4 +152,4 @@ export function Card() {
       </div>
     </>
   );
-}
+};

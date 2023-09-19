@@ -1,16 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { createSlice } from '@reduxjs/toolkit';
+import { IFilter } from '../../@types/type';
+
+const initialState: IFilter = {
   categoryId: 0,
   sort: {
-    name: "популярности (asc)",
-    sortProperty: "-rating",
+    name: 'популярности (asc)',
+    sortProperty: '-rating',
   },
   currentPage: 1,
-  searchValue: "",
+  searchValue: '',
 };
 
 export const filterSlice = createSlice({
-  name: "filter",
+  name: 'filter',
   initialState,
   reducers: {
     setCategoryId: (state, action) => {

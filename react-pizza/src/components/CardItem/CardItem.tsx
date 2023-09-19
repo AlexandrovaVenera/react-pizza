@@ -1,5 +1,9 @@
-import { useDispatch } from "react-redux";
-import { addItems, removeItem, removeItems } from "../../redux/Slice/cardSlice";
+import { useDispatch } from 'react-redux';
+import {
+  addItems,
+  removeItem,
+  removeItems,
+} from '../../redux/Slice/cardSlice.ts';
 
 type CardItemProps = {
   id: number;
@@ -39,7 +43,11 @@ export const CardItem: React.FC<CardItemProps> = ({
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <img
+          className="pizza-block__image"
+          src={imageUrl}
+          alt="Pizza"
+        />
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>

@@ -1,11 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { createSlice } from '@reduxjs/toolkit';
+
+type ICardItem = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: string;
+  sizes: number;
+  count: number;
+};
+
+interface ICard {
+  items: ICardItem[];
+  totalPrice: number;
+}
+const initialState: ICard = {
   items: [],
   totalPrice: 0,
 };
 
 export const cardSlice = createSlice({
-  name: "card",
+  name: 'card',
   initialState,
   reducers: {
     addItems: (state, action) => {

@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItems } from '../../redux/Slice/cardSlice.ts';
-import { IItem, RootState } from '../../@types/type';
-
-export const PizzaBlock: React.FC<IItem> = ({
+export function PizzaBlock({
   id,
   title,
   price,
@@ -13,11 +11,11 @@ export const PizzaBlock: React.FC<IItem> = ({
   category,
   rating,
   count,
-}) => {
+}) {
   const typePizza = ['тонкое', 'традиционное'];
 
-  const addedItem = useSelector((state: RootState) =>
-    state.card.items.find((obj: IItem) => obj.id === id)
+  const addedItem = useSelector((state) =>
+    state.card.items.find((obj) => obj.id === id)
   );
   const [indexActive, setIndexSize] = useState(0);
   const [indexType, setIndexType] = useState(0);
@@ -99,4 +97,4 @@ export const PizzaBlock: React.FC<IItem> = ({
       </div>
     </div>
   );
-};
+}
