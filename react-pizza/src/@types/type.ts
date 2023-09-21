@@ -1,4 +1,4 @@
-import { store } from '../redux/store';
+import { store } from "../redux/store";
 export interface IItem {
   id: number;
   title: string;
@@ -27,7 +27,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 type Sort = {
   name: string;
-  sortProperty: '-rating' | 'rating' | '-price' | 'price' | '-title' | 'title';
+  sortProperty: "-rating" | "rating" | "-price" | "price" | "-title" | "title";
 };
 export interface IFilter {
   categoryId: number;
@@ -38,5 +38,21 @@ export interface IFilter {
 
 export interface Pizza {
   items: IItem[];
-  status: 'loading' | 'success' | 'error';
+  status: "loading" | "success" | "error";
+}
+
+export type ICardItem = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: string;
+  sizes: number;
+  count: number;
+};
+
+export enum Status {
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
 }
