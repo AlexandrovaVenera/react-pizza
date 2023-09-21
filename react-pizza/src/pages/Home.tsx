@@ -13,12 +13,15 @@ import {
 } from '../redux/Slice/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../@types/type';
 
 const Home: React.FC = () => {
-  const { items, status } = useSelector((state) => state.pizza);
-  const currentPage = useSelector((state) => state.filter.currentPage);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
+  const currentPage = useSelector(
+    (state: RootState) => state.filter.currentPage
+  );
   const { sort, categoryId, searchValue } = useSelector(
-    (state) => state.filter
+    (state: RootState) => state.filter
   );
   const dispatch = useDispatch();
   const onChangeCurrentPage = (id: number) => {
@@ -75,7 +78,19 @@ const Home: React.FC = () => {
   const search = searchValue ? searchValue : '';
 
   const getPizzas = () => {
-    dispatch(fetchPizzas({ categoryId, sort:, search, order, currentPage }));
+    const sortBy = sort.sortProperty.replace('-', '');
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+    const category = categoryId > 0 ? String(categoryId) : '';
+    const search = searchValue;
+    dispatch(
+      fetchPizzas({
+        category,
+        sortBy,
+        search,
+        order,
+        currentPage: String(currentPage),
+      })
+    );
     window.scrollTo(0, 0);
   };
 

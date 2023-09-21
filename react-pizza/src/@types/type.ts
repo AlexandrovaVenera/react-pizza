@@ -23,9 +23,7 @@ export interface IPizzaItem {
   count: number;
 }
 
-type FuncType = typeof store.getState;
-
-export type RootState = ReturnType<FuncType>;
+export type RootState = ReturnType<typeof store.getState>;
 
 type Sort = {
   name: string;
@@ -39,6 +37,6 @@ export interface IFilter {
 }
 
 export interface Pizza {
-  items: IPizzaItem[];
+  items: IItem[];
   status: 'loading' | 'success' | 'error';
 }
