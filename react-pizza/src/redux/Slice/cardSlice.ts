@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ICardItem } from "../../@types/type";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ICardItem } from '../../@types/type';
 
 interface ICard {
   items: ICardItem[];
@@ -11,10 +11,10 @@ const initialState: ICard = {
 };
 
 export const cardSlice = createSlice({
-  name: "card",
+  name: 'card',
   initialState,
   reducers: {
-    addItems: (state, action) => {
+    addItems(state, action: PayloadAction<ICardItem>) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
       if (findItem) {
         findItem.count++;
@@ -27,7 +27,7 @@ export const cardSlice = createSlice({
         0
       );
     },
-    removeItem: (state, action) => {
+    removeItem(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem) {
         findItem.count--;
@@ -37,14 +37,14 @@ export const cardSlice = createSlice({
         0
       );
     },
-    removeItems: (state, action) => {
+    removeItems(state, action) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
       state.totalPrice = state.items.reduce(
         (sum, current) => sum + current.price * current.count,
         0
       );
     },
-    clearItem: (state) => {
+    clearItem(state) {
       state.items = [];
       state.totalPrice = 0;
     },

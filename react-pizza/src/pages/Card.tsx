@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { CardItem } from "../components/CardItem/CardItem";
-import { CardEmpty } from "../components/CardItem/CardEmpty";
-import { clearItem } from "../redux/Slice/cardSlice.ts";
-import { ICardItem, IItem, RootState } from "../@types/type";
-import { useAppDispatch } from "../redux/store";
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CardItem } from '../components/CardItem/CardItem';
+import { CardEmpty } from '../components/CardItem/CardEmpty';
+import { clearItem } from '../redux/Slice/cardSlice';
+import { ICardItem, IItem, RootState } from '../@types/type';
+import { useAppDispatch } from '../redux/store';
 export const Card: React.FC = () => {
   const dispatch = useAppDispatch();
   const items = useSelector((state: RootState) => state.card.items);
@@ -56,7 +56,10 @@ export const Card: React.FC = () => {
               </svg>
               Корзина
             </h2>
-            <div onClick={clear} className="cart__clear">
+            <div
+              onClick={clear}
+              className="cart__clear"
+            >
               <svg
                 width="20"
                 height="20"
@@ -99,18 +102,23 @@ export const Card: React.FC = () => {
           </div>
           <div className="content-card__items">
             {items.map((item) => {
-              return <CardItem key={item.id} {...item} />;
+              return (
+                <CardItem
+                  key={item.id}
+                  {...item}
+                />
+              );
             })}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
               <span>
-                {" "}
-                Всего пицц: <b>{totalCount} шт.</b>{" "}
+                {' '}
+                Всего пицц: <b>{totalCount} шт.</b>{' '}
               </span>
               <span>
-                {" "}
-                Сумма заказа: <b>{totalPrice} ₽</b>{" "}
+                {' '}
+                Сумма заказа: <b>{totalPrice} ₽</b>{' '}
               </span>
             </div>
             <div className="cart__bottom-buttons">
